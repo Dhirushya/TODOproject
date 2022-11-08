@@ -1,25 +1,68 @@
-import logo from './logo.svg';
-import './App.css';
+import "./index.css"
+import {useState} from "react"
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+
+
+export default function App(){
+const [id,setId]=useState("");
+const [name,setName]=useState("");
+const [age,setAge]=useState("");
+const [emp,setEmp]=useState([{
+ id: 1,name:"  ABC",age:"  3"}])
+
+
+
+
+
+const handleAdd=()=>{
+    console.log(id,name,age);
+    setEmp([...emp,{id:id,name:name,age:age}]);
+    setId("");setAge("");setName("")
 }
 
-export default App;
+
+const handleInd=(id)=>{
+      setEmp(emp.filter(e=>e.id!==id))
+}
+
+
+const handleAll=()=>
+{
+    setEmp([]);
+}
+
+
+
+
+return(
+    <div className="App">
+    <h1>REACT CRUD APPLICATION</h1>
+    <input type ="text" placeholder="Enter Id" 
+     value={id} onChange={e=>setId(e.target.value)}
+    />
+    <br/>
+     <input type ="text" placeholder="Enter name"
+     value={name} onChange={e=>setName(e.target.value)}
+    />
+    <br/>
+     <input type ="text" placeholder="Enter age"
+     value={age} onChange={e=>setAge(e.target.value)}
+    />
+    <br/><br/>
+    <button onClick={handleAdd} className="add">ADD</button>
+    <br/><br/>
+    <button onClick={handleAll} className="del">DELETE ALL</button>
+    <br/><br/>
+    {emp.map(e=>(
+        <div>
+            {e.id}{e.name}{e.age}<button className="delete"
+            onClick={()=>{handleInd(e.id)
+
+            }
+                }>X</button>
+        </div>
+    ))}
+    </div>
+);
+}
